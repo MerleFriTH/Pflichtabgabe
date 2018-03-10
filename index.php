@@ -36,7 +36,20 @@ and open the template in the editor.
             event.preventDefault();
         });
         $("#isbnform").submit(function(){
-            alert("Hallo Welt");
+            $.ajax({
+                      url: 'getMetadataOCLC.php',
+                      data: "isbn=389721105X",
+                      dataType: 'json',
+                      success: function(data)
+                      {
+                          $('#all').append('<div id="results"> Test </div>');
+                      } ,
+                      error: function()
+                      {
+                          $('#all').append('<div id="results"> Kein Ergebnis </div>');
+                      }
+            });
+            //alert("Hallo Welt");
             $('#all').append('<div id="results"> Test </div>');
         });
     </script>
