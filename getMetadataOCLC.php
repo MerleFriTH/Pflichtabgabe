@@ -5,7 +5,7 @@
  * Date: 08.03.2018
  * Time: 22:22
  */
-require_once './My_MySQLi.php';
+//require_once './My_MySQLi.php';
 
 function askOCLC($isbn)
 {
@@ -27,7 +27,7 @@ function askOCLC($isbn)
 
 function getResults($isbn) {
     $result;
-    $inDB = "false";
+    $inDB = false;
     //set inDB true if IBSN in DB
     if ($inDB == true) {
         //return JSON-Object of DB
@@ -44,10 +44,6 @@ function getResults($isbn) {
     
 }
 
-echo getResults("389721105X");
-?>
-<br>
-<?php
-echo getResults("3897211051");
+getResults($_GET['isbn']);
 
 ?>
