@@ -5,7 +5,9 @@
  * Date: 08.03.2018
  * Time: 22:22
  */
-function getResults($isbn)
+require_once './My_MySQLi.php';
+
+function askOCLC($isbn)
 {
     $format = "json";
     $method = "getMetadata";
@@ -18,9 +20,28 @@ function getResults($isbn)
     if ($decode->stat == "ok") {
         return $result;
     } else {
-        return "keine Ergebnisse";
+        return "noResult";
     }
  
+}
+
+function getResults($isbn) {
+    $result;
+    $inDB = "false";
+    //set inDB true if IBSN in DB
+    if ($inDB == true) {
+        //return JSON-Object of DB
+        return "nothing";
+    } else {
+        $result = askOCLC($isbn);
+        if ($result == "noResult") {
+            return "noResult";
+        } else {
+            return $result;
+        }
+    }
+    
+    
 }
 
 echo getResults("389721105X");
