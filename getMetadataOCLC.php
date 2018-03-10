@@ -26,7 +26,7 @@ function askOCLC($isbn)
 }
 
 function getResults($isbn) {
-    $result;
+    $result = "0";
     $inDB = false;
     //set inDB true if IBSN in DB
     if ($inDB == true) {
@@ -43,7 +43,7 @@ function getResults($isbn) {
     
     
 }
-
-getResults($_GET['isbn']);
+$input = $_GET['isbn'];
+getResults($input);
 
 ?>
