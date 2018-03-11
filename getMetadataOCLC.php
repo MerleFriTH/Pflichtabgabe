@@ -25,20 +25,34 @@ function askOCLC($isbn)
  
 }
 
-function getResults($isbn) {
+function sendResult($inputisbn){
+    $mysql = new My_MySQLi("localhost", "root", "", "isbnMetadata");
+    $selectSQL1 = "SELECT * FROM metadata WHERE isbn='$inputisbn'";
+    
+    $resultDB = $mysql->query($selectSQL1);
+
+    while($row = $resultDB->fetch_array(MYSQL_ASSOC)) {
+            $myArray[] = $row;
+    }
+    $json = json_encode($myArray);
+    return $json;
+
+}
+
+function getResults($inputisbn) {
     $result = "0";
-    $inDB = false;
-    //set inDB true if IBSN in DB
-    if ($inDB == true) {
-        //return JSON-Object of DB
-        return "TODO find objekt in DB";
+    //openDB
+    $mysql = new My_MySQLi("localhost", "root", "", "isbnMetadata");
+    $selectSQL = "SELECT * FROM metadata WHERE isbn='$inputisbn'";
+    
+    if($result = $mysql->query($selectSQL)){
+        return sendResult($inputisbn);
+        //return $result;
     } else {
-        $result = askOCLC($isbn);
+        $result = askOCLC($inputisbn);
         if ($result == "noResult") {
             return "noResult";
         } else {
-            //openDB
-            $mysql = new My_MySQLi("localhost", "root", "", "isbnMetadata");
             //fill metadata in variables
             //addslashes to escape special characters
             //unfornutately I could not get mysqli_real_escape_string to work
@@ -55,16 +69,16 @@ function getResults($isbn) {
             $title= addslashes($book[0]->title);
             
             //open DB
-            $sql = "INSERT INTO metadata (publisher,lang,city,author,ed,year,isbn,title) VALUES ('$publisher','$lang','$city','$author','$ed','$year','$isbn','$title')";
-            $mysql->query($sql);           
-            return $result;
+            $insertSQL = "INSERT INTO metadata (publisher,lang,city,author,ed,year,isbn,title) VALUES ('$publisher','$lang','$city','$author','$ed','$year','$isbn','$title')";
+            $mysql->query($insertSQL);
+            return sendResult($inputisbn);
+            //return $result;
         }
     }
-    
-    
 }
 
 print getResults("389721105X");
-//$input = $_GET['isbn'];
+//print getResults("456");
+////$input = $_GET['isbn'];
 //getResults($input);
 ?>
