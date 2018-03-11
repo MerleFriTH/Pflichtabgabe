@@ -37,32 +37,26 @@ function getResults($isbn) {
         if ($result == "noResult") {
             return "noResult";
         } else {
+            //openDB
+            $mysql = new My_MySQLi("localhost", "root", "", "isbnMetadata");
             //fill metadata in variables
+            //addslashes to escape special characters
+            //unfornutately I could not get mysqli_real_escape_string to work
             $decoded = json_decode($result);
             $book = $decoded->list;
-            $publisher = $book[0]->publisher;
-            $lang= $book[0]->lang;
-            $city= $book[0]->city;
-            $author= $book[0]->author;
-            $ed= $book[0]->ed;
-            $year= $book[0]->year;
+            $publisher = addslashes($book[0]->publisher);
+            $lang= addslashes($book[0]->lang);
+            $city= addslashes($book[0]->city);
+            $author= addslashes($book[0]->author);
+            $ed= addslashes($book[0]->ed);
+            $year= addslashes($book[0]->year);
             $isbn= $book[0]->isbn;
-            $isbn = $isbn[0];
-            $title= $book[0]->title;
-            
-    //        $publisher = "Test2";
-     //       $lang= "Test2";
-      //      $city= "Test2";
-       //     $author= "Test2";
-        //    $ed= "Test2";
-         //   $year= "Test2";
-          //  $isbn= "Test2";
-           // $title= "Test2";
+            $isbn = addslashes($isbn[0]);
+            $title= addslashes($book[0]->title);
             
             //open DB
-            $mysql = new My_MySQLi("localhost", "root", "", "isbnMetadata");
             $sql = "INSERT INTO metadata (publisher,lang,city,author,ed,year,isbn,title) VALUES ('$publisher','$lang','$city','$author','$ed','$year','$isbn','$title')";
-            $mysql->query($sql);
+            $mysql->query($sql);           
             return $result;
         }
     }
