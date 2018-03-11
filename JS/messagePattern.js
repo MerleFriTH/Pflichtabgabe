@@ -1,12 +1,13 @@
 function setMessage() {
     const isbn = document.getElementById("isbn");
-    isbn.addEventListener('invalid', function () {
+    isbn.addEventListener('invalid', function (e) {
         if (isbn.validity.valueMissing) {
-            isbn.setCustomValidity("Bitte geben Sie eine ISBN ein");
-        } else if (!isbn.validity.valid) {
-            isbn.setCustomValidity("Dies ist keine gültige ISBN");
+            e.target.setCustomValidity("Bitte geben Sie eine ISBN ein");
+        } else if (!isbn.checkValidity()) {
+            e.target.setCustomValidity("Dies ist keine gültige ISBN");
         }
-    },false);
+    });
 }
 
 window.addEventListener('load', setMessage);
+//TODO: es hinkriegen, dass nach falscher Eingabe wieder eine richtige EIngabe möglich ist
