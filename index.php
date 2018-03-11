@@ -37,10 +37,10 @@ and open the template in the editor.
         });
         $("#isbnform").submit(function(){
             $.ajax({
-                      url: 'getMetadataOCLC.php',
+                      url: 'http://localhost/Pflichtabgabe/getMetadataOCLC.php',
                       data: "isbn=389721105X",
                       dataType: 'json',
-                      success: function(data)
+                      success: function()
                       {
                           $('#all').append('<div id="results"> Test </div>');
                       } ,
