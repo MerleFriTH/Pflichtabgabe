@@ -37,18 +37,40 @@ function getResults($isbn) {
         if ($result == "noResult") {
             return "noResult";
         } else {
+            //fill metadata in variables
+            $decoded = json_decode($result);
+            $book = $decoded->list;
+            $publisher = $book[0]->publisher;
+            $lang= $book[0]->lang;
+            $city= $book[0]->city;
+            $author= $book[0]->author;
+            $ed= $book[0]->ed;
+            $year= $book[0]->year;
+            $isbn= $book[0]->isbn;
+            $isbn = $isbn[0];
+            $title= $book[0]->title;
+            
+    //        $publisher = "Test2";
+     //       $lang= "Test2";
+      //      $city= "Test2";
+       //     $author= "Test2";
+        //    $ed= "Test2";
+         //   $year= "Test2";
+          //  $isbn= "Test2";
+           // $title= "Test2";
+            
+            //open DB
             $mysql = new My_MySQLi("localhost", "root", "", "isbnMetadata");
-            $sql = "INSERT INTO metadata (isbn, author) VALUES ('Test', 'Merle')";
+            $sql = "INSERT INTO metadata (publisher,lang,city,author,ed,year,isbn,title) VALUES ('$publisher','$lang','$city','$author','$ed','$year','$isbn','$title')";
             $mysql->query($sql);
-            //$test = $mysql->query("SELECT * FROM metadata");
             return $result;
         }
     }
     
     
 }
-//$input = $_GET['isbn'];
-//getResults($input);
 
 print getResults("389721105X");
+//$input = $_GET['isbn'];
+//getResults($input);
 ?>
