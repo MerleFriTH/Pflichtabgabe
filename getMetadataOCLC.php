@@ -77,8 +77,7 @@ function getResults($inputisbn) {
     }
 }
 
-print getResults("389721105X");
-//print getResults("456");
-////$input = $_GET['isbn'];
-//getResults($input);
+echo getResults("389721105X");
+//getResults();
+
 ?>
