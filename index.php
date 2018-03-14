@@ -32,23 +32,24 @@ and open the template in the editor.
                 </form>
             </div>
             <script type="text/javascript">
-
                 $("#isbnform").submit(function (event) {
                     event.preventDefault();
                 });
                 $("#isbnform").submit(function () {
                     var inputISBN = $("input#isbn").val();
-                    alert(inputISBN);
+                    inputISBN = "{\"isbn\":\""+inputISBN+"\"}";
                     $.post({
-                        url: 'http://localhost/Pflichtabgabe/getMetadataOCLC.php',
+                        url: 'http://localhost/Pflichtabgabe/validateISBN.php',
+                        data: inputISBN,
                         dataType: 'json',
-                        success: function ()
+                        success: function (data)
                         {
-                            $('#all').append('<div id="results"> Test </div>');
+                            //$('#all').append('<div id="results">Test</div>');
+                            $('#all').append('<div id="results">'+data+'</div>');
                         },
                         error: function ()
                         {
-                            $('#all').append('<div id="results"> Kein Ergebnis </div>');
+                            $('#all').append('<div id="results"> Die Daten konnten nicht &uumlbermittelt werden </div>');
                         }
                     });
                     //alert("Hallo Welt");
