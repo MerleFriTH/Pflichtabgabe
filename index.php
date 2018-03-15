@@ -23,7 +23,8 @@ and open the template in the editor.
                         <!--http://html5pattern.com/Miscs-->
                         <input type="text" id="isbn"
                                pattern="^(?:(?=.{17}$)97[89][ -](?:[0-9]+[ -]){2}[0-9]+[ -][0-9]|97[89][0-9]{10}|(?=.{13}$)(?:[0-9]+[ -]){2}[0-9]+[ -][0-9Xx]|[0-9]{9}[0-9Xx])$"
-                               required>
+                               required
+                               oninput="setCustomValidity('')">
                     </label>
                     <div>
                         <button type="reset">Eingabe löschen</button>
