@@ -37,10 +37,12 @@ and open the template in the editor.
                 });
                 $("#isbnform").submit(function () {
                     var inputISBN = $("input#isbn").val();
-                    inputISBN = "{\"isbn\":\""+inputISBN+"\"}";
+                    inputISBN = '{"isbn":"'+inputISBN+'"}';
+                    
                     $.post({
                         url: 'http://localhost/Pflichtabgabe/getMetadataOCLC.php',
                         data: inputISBN,
+                        dataType: 'json',
                         success: function (data)
                         {
                             //('#all').append('<div id="results">Test</div>');
@@ -54,9 +56,9 @@ and open the template in the editor.
                                                                 ISBN: '+data[0].isbn+'</br>\n\
                                                                 </div>');
                         },
-                        error: function ()
+                        error: function (data)
                         {
-                            $('#all').append('<div id="results"> Die Daten konnten nicht &uumlbermittelt werden </div>');
+                            $('#all').append('<div id="results"> Die ISBN ist nicht bei OCLC registiert.</div>');
                         }
                     });
                 });
