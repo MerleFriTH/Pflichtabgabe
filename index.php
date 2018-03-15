@@ -39,7 +39,7 @@ and open the template in the editor.
                     var inputISBN = $("input#isbn").val();
                     inputISBN = "{\"isbn\":\""+inputISBN+"\"}";
                     $.post({
-                        url: 'http://localhost/Pflichtabgabe/validateISBN.php',
+                        url: 'http://localhost/Pflichtabgabe/getMetadataOCLC.php',
                         data: inputISBN,
                         dataType: 'json',
                         success: function (data)
@@ -52,8 +52,6 @@ and open the template in the editor.
                             $('#all').append('<div id="results"> Die Daten konnten nicht &uumlbermittelt werden </div>');
                         }
                     });
-                    //alert("Hallo Welt");
-                    //$('#all').append('<div id="results"> Test </div>');
                 });
             </script>
         </div>
