@@ -41,10 +41,9 @@ and open the template in the editor.
                     $.post({
                         url: 'http://localhost/Pflichtabgabe/getMetadataOCLC.php',
                         data: inputISBN,
-                        dataType: 'json',
                         success: function (data)
                         {
-                            //$('#all').append('<div id="results">Test</div>');
+                            //('#all').append('<div id="results">Test</div>');
                             //as there should be only one result for an isbn,
                             //i do not interate through the result
                             $('#all').append('<div id="results">Titel: '+data[0].title+'</br>\n\
