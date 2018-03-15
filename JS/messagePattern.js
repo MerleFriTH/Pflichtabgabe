@@ -8,6 +8,4 @@ function setMessage() {
         }
     });
 }
-
 window.addEventListener('load', setMessage);
-//TODO: es hinkriegen, dass nach falscher Eingabe wieder eine richtige EIngabe möglich ist
