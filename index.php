@@ -45,7 +45,15 @@ and open the template in the editor.
                         success: function (data)
                         {
                             //$('#all').append('<div id="results">Test</div>');
-                            $('#all').append('<div id="results">'+data+'</div>');
+                            //as there should be only one result for an isbn,
+                            //i do not interate through the result
+                            $('#all').append('<div id="results">Titel: '+data[0].title+'</br>\n\
+                                                                Autor: '+data[0].author+'</br>\n\
+                                                                Verlag, Stadt: '+data[0].publisher+', '+data[0].city+'</br>\n\
+                                                                Sprache: '+data[0].lang+'</br>\n\
+                                                                Jahr, Ausgabe: '+data[0].year+', '+data[0].ed+'</br>\n\
+                                                                ISBN: '+data[0].isbn+'</br>\n\
+                                                                </div>');
                         },
                         error: function ()
                         {
