@@ -80,5 +80,10 @@ function getResults($inputisbn) {
     return $returnvalue;
 }
 
-echo getResults("3827315352");
+
+$content = trim(file_get_contents("php://input"));
+$decoded = json_decode($content, true);
+$userinput = $decoded->{"isbn"};
+echo getResults($userinput);
+//echo getResults("3827315352");
 ?>
