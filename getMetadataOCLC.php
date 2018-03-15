@@ -8,6 +8,19 @@ error_reporting(E_ALL);
  */
 require_once './My_MySQLi.php';
 
+function validateISBN($data){
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    $pattern="'^(?:(?=.{17}$)97[89][ -](?:[0-9]+[ -]){2}[0-9]+[ -][0-9]|97[89][0-9]{10}|(?=.{13}$)(?:[0-9]+[ -]){2}[0-9]+[ -][0-9Xx]|[0-9]{9}[0-9Xx])$'";
+    if (preg_match($pattern, $data)==1){
+        $return = str_replace("-","",$data); 
+    } else {
+        $return = false;
+    }
+    return $return;             
+}
+
 function askOCLC($isbn) {
     $format = "json";
     $method = "getMetadata";
@@ -84,6 +97,11 @@ function getResults($inputisbn) {
 $content = trim(file_get_contents("php://input"));
 $decoded = json_decode($content, true);
 $userinput = $decoded["isbn"];
-echo getResults($userinput);
+$valISBN = validateISBN($userinput);
+if ($valISBN != false) {
+    echo getResults($valISBN);
+} else {
+    echo "noResult";
+}
 //echo getResults("9787891231270");
 ?>
