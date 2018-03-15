@@ -17,11 +17,10 @@ function askOCLC($isbn) {
 
     $decode = json_decode($result);
 
-    if ($decode->stat == "ok") {
-        return $result;
-    } else {
-        return "noResult";
+    if ($decode->stat != "ok") {
+        $result = "noResult";
     }
+    return $result;
 }
 
 function sendResult($inputisbn) {
@@ -42,15 +41,16 @@ function getResults($inputisbn) {
     $mysql = new My_MySQLi("localhost", "root", "", "isbnMetadata");
     $selectSQL = "SELECT * FROM metadata WHERE isbn='$inputisbn'";
     $sqlResult = $mysql->query($selectSQL);
-    echo var_dump($sqlResult);
+    //echo var_dump($sqlResult);
     $numRows = mysqli_num_rows($sqlResult);
-    echo $numRows;
+    //echo $numRows;
+    $returnvalue = "0";
 
     if ($numRows == 0) {
         $result = askOCLC($inputisbn);
-        echo $result;
+        //echo $result;
         if ($result == "noResult") {
-            return "noResult";
+            $returnvalue = "noResult";
         } else {
             //fill metadata in variables
             //addslashes to escape special characters
@@ -70,12 +70,13 @@ function getResults($inputisbn) {
             //open DB
             $insertSQL = "INSERT INTO metadata (publisher,lang,city,author,ed,year,isbn,title) VALUES ('$publisher','$lang','$city','$author','$ed','$year','$isbn','$title')";
             $mysql->query($insertSQL);
-            return sendResult($inputisbn);
+            $returnvalue = sendResult($inputisbn);
         }
     } else {
-            return sendResult($inputisbn);
+            $returnvalue = sendResult($inputisbn);
             //return $result;
     }
+    return $returnvalue;
 }
 
 echo getResults("3827315352");
