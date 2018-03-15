@@ -55,6 +55,7 @@ function getResults($inputisbn) {
             //fill metadata in variables
             //addslashes to escape special characters
             //unfornutately I could not get mysqli_real_escape_string to work
+            //as the isbn should be unique, I do not look into book[1] etc
             $decoded = json_decode($result);
             $book = $decoded->list;
             $publisher = addslashes($book[0]->publisher);
